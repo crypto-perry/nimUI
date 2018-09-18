@@ -40,7 +40,7 @@ if (typeof web3 !== 'undefined') {
   this.dialog = false;
 }
 
-var nimContract = web3.eth.contract([
+var nim = web3.eth.Contract([
 	{
 		"constant": false,
 		"inputs": [
@@ -102,8 +102,7 @@ var nimContract = web3.eth.contract([
 		"stateMutability": "view",
 		"type": "function"
 	}
-]);
-var nim = nimContract.at('0x44f4ad91de8c6a3e3d7ef3b9424d5ea9476026e5');
+], '0x44f4ad91de8c6a3e3d7ef3b9424d5ea9476026e5');
 console.log(nim);
 $("#play").click(function() {
   console.log($("#opponent").val(), $("#move").val());
