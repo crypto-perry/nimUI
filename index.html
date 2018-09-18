@@ -83,11 +83,11 @@ var nimContract = web3.eth.contract([
 				"type": "address"
 			}
 		],
-		"name": "viewgame",
+		"name": "viewturn",
 		"outputs": [
 			{
-				"name": "gamestate",
-				"type": "uint256[]"
+				"name": "turnstate",
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -102,11 +102,11 @@ var nimContract = web3.eth.contract([
 				"type": "address"
 			}
 		],
-		"name": "viewturn",
+		"name": "viewgame",
 		"outputs": [
 			{
-				"name": "turnstate",
-				"type": "string"
+				"name": "gamestate",
+				"type": "uint256[]"
 			}
 		],
 		"payable": false,
@@ -114,7 +114,7 @@ var nimContract = web3.eth.contract([
 		"type": "function"
 	}
 ]);
-var nim = nimContract.at('0x1ff13cedbf06fd1811aab596b701406cd751b3e6');
+var nim = nimContract.at('0x44f4ad91de8c6a3e3d7ef3b9424d5ea9476026e5');
 console.log(nim);
 $("#play").click(function() {
   console.log($("#opponent").val(), $("#move").val());
