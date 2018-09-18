@@ -26,30 +26,19 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script>
-window.addEventListener("load", function() {
-  if (typeof web3 !== "undefined") {
-    window.web3 = new Web3(web3.currentProvider);
-    console.log("Metamask connected!");
-  } else {
-    console.log("No web3? You should consider trying MetaMask!");
-    window.web3 = new Web3(
-      new Web3.providers.HttpProvider("https://localhost:8545")
-    );
-  }
+if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
   web3.eth.getAccounts(function(error, accounts) {
-    if (!error) {
-      web3.eth.getBalance(accounts[0], function(error, balance) {
-        if (!error) {
-          console.log("Your account: " + accounts[0] + " has a balance of: " + balance.toNumber() / 1000000000000000000 + "Ether");
-        } else {
-          console.error(error);
-        }
-      });
-    } else {
-      console.error(error);
+    if (error) { console.log(error);}
+    else if (accounts.length == 0) {
+      alert("*Please unlock Metamask in order to donate");
+      this.dialog = false;
     }
   });
-});
+} else {
+  alert("If you wish to pay with crypto, please install a web3 provider like Metamask: https://metamask.io/");
+  this.dialog = false;
+}
 
 var nimContract = web3.eth.contract([
 	{
