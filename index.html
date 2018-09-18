@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv=”X-UA-Compatible” content="ie=edge">
+ <title>Document</title>
+<link rel="stylesheet" type="text/css" href="index.css">
+<script src="./node_modules/web3/dist/web3.min.js"></script>
+</head>
+<body>
+<div class="container">
+<h1>Nim Smart Contract</h1>
+<h2 id="instruction"></h2>
+
+<label for=opponent class="col-lg-2 control-label">Opponent Address</label>
+<input id="opponent" type="text">
+
+<label for="gamestate" class="col-lg-2 control-label">Current Game State</label>
+<input disabled id="gamestate" type="text">
+<label for="move" class="col-lg-2 control-label">Your Move</label>
+<input id="move" type="text">
+
+<button id="play">Submit State</button>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script>
+window.addEventListener("load", function() {
+  if (typeof web3 !== "undefined") {
+    window.web3 = new Web3(web3.currentProvider);
+  } else {
+    console.log("No web3? You should consider trying MetaMask!");
+    window.web3 = new Web3(
+      new Web3.providers.HttpProvider("https://localhost:8545")
+    );
+  }
+  web3.eth.getAccounts(function(error, accounts) {
+    if (!error) {
+      web3.eth.getBalance(accounts[0], function(error, balance) {
+        if (!error) {
+          console.log("Your account: " + accounts[0] + " has a balance of: " + balance.toNumber() / 1000000000000000000 + "Ether");
+        } else {
+          console.error(error);
+        }
+      });
+    } else {
+      console.error(error);
+    }
+  });
+});
+
+var nimContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "opponent",
+				"type": "address"
+			},
+			{
+				"name": "gamestate",
+				"type": "uint256[]"
+			}
+		],
+		"name": "play",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "opponent",
+				"type": "address"
+			}
+		],
+		"name": "viewgame",
+		"outputs": [
+			{
+				"name": "gamestate",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "opponent",
+				"type": "address"
+			}
+		],
+		"name": "viewturn",
+		"outputs": [
+			{
+				"name": "turnstate",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+var nim = nimContract.at('0x1ff13cedbf06fd1811aab596b701406cd751b3e6');
+
+$("#button").click(function() {
+	nim.play($("#opponent").val(), $("#move").val());
+  console.log($("#opponent").val(), $("#move").val());
+});
+
+</script>
+</body>
+</html>
