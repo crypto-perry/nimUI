@@ -118,7 +118,7 @@ var nim = nimContract.at('0x44f4ad91de8c6a3e3d7ef3b9424d5ea9476026e5');
 console.log(nim);
 $("#play").click(function() {
   console.log($("#opponent").val(), $("#move").val());
-	nim.play($("#opponent").val(), $("#move").val());
+	nim.methods.play($("#opponent").val(), $("#move").val());
 });
 
 </script>
