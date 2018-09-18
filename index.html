@@ -115,8 +115,8 @@ var nimContract = web3.eth.contract([
 	}
 ]);
 var nim = nimContract.at('0x1ff13cedbf06fd1811aab596b701406cd751b3e6');
-
-$("#button").click(function() {
+console.log(nim);
+$("#play").click(function() {
 	nim.play($("#opponent").val(), $("#move").val());
   console.log($("#opponent").val(), $("#move").val());
 });
